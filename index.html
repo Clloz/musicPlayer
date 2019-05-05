@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>musicPlayer</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <div class="cover"></div>
+    <div class="music-box">
+      <img src="" alt="cover" class="avatar" />
+      <div class="music-panel">
+        <h4 class="name">Tsunami</h4>
+        <div class="mid">
+          <div class="progress" data-time="3:42"></div>
+          <div class="current"></div>
+          <div class="volume">
+            <div class="vol-control"></div>
+            <div class="vol-current"></div>
+            <!-- <div class="cursor" data-value="20px"></div> -->
+          </div>
+          <div class="vol">
+            <span><i class="fa fa-volume-up"></i></span>
+          </div>
+        </div>
+        <ul class="control">
+          <li class="btn btn-back"><i class="fa fa-backward"></i></li>
+          <li class="btn btn-play pause">
+            <i class="fa fa-play"></i><i class="fa fa-pause"></i>
+          </li>
+          <li class="btn btn-next"><i class="fa fa-forward"></i></li>
+          <li class="btn btn-list"><i class="fa fa-music"></i></li>
+        </ul>
+      </div>
+      <!-- <ul class="song-list"></ul> -->
+      <div class="list-wrap"><ul class="song-list"></ul></div>
+      
+    </div>
+    <script src="./js/index.js"></script>
+  </body>
+</html>

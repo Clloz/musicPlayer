@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Tsunami",
+        "artist": "Southern All Stars",
+        "image": "./img/tsunami.jpg",
+        "src": "./music/tsunami.mp3"
+    },
+    {
+        "name": "Swimming",
+        "artist": "Everything Little Thing",
+        "image": "./img/swim.jpg",
+        "src": "./music/swim.mp3"
+    },
+    {
+        "name": "My Friend",
+        "artist": "Zard",
+        "image": "./img/zard.png",
+        "src": "./music/zard.mp3"
+    },
+    {
+        "name": "Re:make",
+        "artist": "One Ok Rock",
+        "image": "./img/remake.jpg",
+        "src": "./music/remake.mp3"
+    },
+    {
+        "name": "Hitomi Wo Tojite",
+        "artist": "Ayaka",
+        "image": "./img/hitomi.jpg",
+        "src": "./music/hitomi.mp3"
+    },
+    {
+        "name": "One More Time",
+        "artist": "Yamasaki",
+        "image": "./img/onemoretime.jpg",
+        "src": "./music/onemoretime.mp3"
+    }
+]

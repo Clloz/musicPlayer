@@ -1,0 +1,245 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'sailregular';
+    src: url('../font/sail-regular-webfont.woff2') format('woff2'),
+         url('../font/sail-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    height: 100vh;
+    font-family: 'sailregular';
+}
+
+.cover {
+    display: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('../img/totoro.jpg') center center no-repeat;
+    background-size: cover;
+    filter: blur(5px);
+}
+
+.music-box {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    font-size: 0;
+    width: 450px;
+    height: 150px;
+    border-radius: 5px;
+    box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.5);
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.music-box .avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 5px 0 0 5px;
+}
+
+.music-box .music-panel {
+    display: inline-block;
+    width: 300px;
+    height: 150px;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+.music-box .music-panel h4 {
+    font-size: 20px;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+}
+
+.music-panel .mid {
+    position: relative;
+    height: 30px;
+    margin-top: 10px;
+}
+
+.music-panel .mid .progress {
+    position: absolute;
+    top: 10px;
+    display: inline-block;
+    height: 3px;
+    width: 200px;
+    background: rgb(61, 60, 60);
+    cursor: pointer;
+}
+
+.music-panel .mid .current {
+    position: absolute;
+    height: 3px;
+    width: 0;
+    top: 10px;
+    background: #e87b00;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.music-panel .mid .progress::after {
+    content: attr(data-time);
+    position: absolute;
+    right: 0;
+    top: -20px;
+    height: 18px;
+    line-height: 18px;
+    font-size: 18px;
+    color: black;
+}
+
+.music-panel .mid .vol {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-block;
+    width: 60px;
+    font-size: 24px;
+    padding-left: 30px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    margin-top: -3px;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+
+.music-panel .mid .vol-control {
+    position: absolute;
+    width: 5px;
+    right: 17px;
+    top: -35px;
+    height: 35px;
+    background: white;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.music-panel .mid .vol-current {
+    position: absolute;
+    width: 5px;
+    top: -12px;
+    right: 17px;
+    height: 12px;
+    background: #e87b00;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.music-panel .mid .cursor {
+    position: absolute;
+    right: 15px;
+    top: -17px;
+    height: 7px;
+    width: 7px;
+    border-radius: 50%;
+    background: #e87b00;
+    cursor: pointer;
+}
+
+.music-panel .mid .volume {
+    position: relative;
+    display: none;
+    top: -4px;
+    height: 1px;
+}
+
+.music-panel .mid .volume.show {
+    display: block;
+}
+
+.music-panel .vol i {
+    vertical-align: middle;
+}
+
+.music-panel .control {
+    list-style: none;
+    margin-top: 20px;
+    width: 100%;
+    color: black;
+}
+.music-panel .control .btn {
+    display: inline-block;
+    font-size: 32px;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+
+.music-panel .control .btn:hover,
+.music-panel .mid .vol:hover {
+    color: #e87b00;
+}
+
+.music-panel .control .btn + .btn {
+    margin-left: 46.6666666px;
+}
+
+.music-panel .control .btn-play.pause .fa-play,
+.music-panel .control .btn-play.play .fa-pause{
+    display: inline-block;
+}
+
+.music-panel .control .btn-play.pause .fa-pause,
+.music-panel .control .btn-play.play .fa-play{
+    display: none;
+}
+
+.music-box .list-wrap {
+    position: relative;
+    height: 300px;
+    margin-top: 3px;
+    overflow: hidden;
+}
+.music-box .list-wrap.hide {
+    height: 0;
+    transition: all 1s;
+}
+
+.music-box .list-wrap .song-list {
+    position: absolute;
+    /* top: 153px; */
+    height: 300px;
+    width: 450px;
+    padding: 10px;
+    font-size: 18px;
+    list-style: none;
+    color: white;
+    box-sizing: border-box;
+    background: rgba(0,0,0,0.5);
+    border-radius: 5px;
+    overflow-y: auto;
+    transform: translateY(0);
+    transition: all 1s;
+}
+
+
+.music-box .list-wrap.hide .song-list {
+    transform: translateY(-300px);
+    transition: all 1s;
+}
+
+
+.music-box .song-list .song {
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    line-height: 50px;
+    padding-left: 20px;
+    cursor: pointer;
+}
+.music-box .song-list .song i {
+    margin-left: 30px;
+    vertical-align: middle;
+    color: #e87b00;
+    display: none;
+}
+
+.music-box .song-list .song.play i {
+    display: inline-block;
+}
