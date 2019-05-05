@@ -198,10 +198,13 @@ function play(isReset) {
 
 // audio.load();
 audio.oncanplay = function () {
+    console.log('reset');
     duration = audio.duration;
     var minute = parseInt(audio.duration / 60);
     var second = parseInt(audio.duration % 60);
-    progress.setAttribute('data-time', `00:00/` + minute + `:` + second);
+    if (audio.currentTime === 0) {
+	progress.setAttribute('data-time', `00:00/` + minute + `:` + second);
+    }
 }
 
 audio.ontimeupdate = function () {
