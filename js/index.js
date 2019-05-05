@@ -28,6 +28,7 @@ var allLi = null;
 var playEl = null;
 var playNum = 0;
 var duration = 0;
+var dontPlayYet = true;
 
 //播放器初始化
 function resetPlayer(obj) {
@@ -61,7 +62,7 @@ function setList(obj) {
 //请求歌曲列表并初始化播放器
 function getMusicList(callback) {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://www.clloz.com:8089/music.json', true);
+    xhr.open('GET', 'https://www.clloz.com/study/music.json', true);
     xhr.send();
     xhr.onload = function () {
         musicObj = JSON.parse(xhr.responseText)
@@ -72,6 +73,7 @@ getMusicList(resetPlayer);
 
 //点击播放按钮
 playBtn.addEventListener('click', function () {
+    dontPlayYet = false;
     if (this.classList.contains('pause')) {
         audio.play();
         this.classList.remove('pause')
@@ -111,6 +113,9 @@ listEl.addEventListener('click', function (e) {
         allLi[playNum].classList.remove('play');
         playNum = parseInt(e.target.getAttribute('data-num'));
         allLi[playNum].classList.add('play');
+        play(false);
+    } else if (playNum === 0 && dontPlayYet === true) {
+	allLi[playNum].classList.add('play');
         play(false);
     }
 })
@@ -178,6 +183,7 @@ function play(isReset) {
     avatar.src = musicObj[playNum].image;
 
     if (!isReset) {
+	dontPlayYet = false;
         pCur.style.width = 0;
         if (playBtn.classList.contains('pause')) {
             playBtn.classList.remove('pause')
