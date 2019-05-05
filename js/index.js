@@ -24,6 +24,8 @@ var volCur = $('.vol-current')
 var cursor = $('.cursor');
 var listWrap = $('.list-wrap')
 var listEl = $('.song-list');
+var disEl = $('.disabled');
+var isContinue = false;
 var allLi = null;
 var playEl = null;
 var playNum = 0;
@@ -81,6 +83,7 @@ playBtn.addEventListener('click', function () {
         allLi[playNum].classList.add('play');
     } else {
         audio.pause();
+	isContinue = false;
         this.classList.remove('play')
         this.classList.add('pause');
     }
@@ -217,4 +220,26 @@ audio.ontimeupdate = function () {
 audio.onended = function () {
     var event = new Event('click');
     nextBtn.dispatchEvent(event);
+}
+
+//online offline
+window.onoffline = function () {
+    console.log("offline")
+    disEl.classList.add('show');
+    var event = new Event('click');
+    listBtn.dispatchEvent(event);
+    if (!audio.paused) {
+	playBtn.dispatchEvent(event);
+	isContinue = true;
+    }
+}
+
+window.ononline = function () {
+    console.log("online");
+    disEl.classList.remove('show');
+    var event = new Event('click');
+    listBtn.dispatchEvent(event);
+    if (isContinue) {
+	playBtn.dispatchEvent(event);
+    }
 }
