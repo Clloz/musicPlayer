@@ -62,7 +62,7 @@ function setList(obj) {
 //请求歌曲列表并初始化播放器
 function getMusicList(callback) {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://www.clloz.com/study/music.json', true);
+    xhr.open('GET', 'https://img.clloz.com/project/music-player/music.json', true);
     xhr.send();
     xhr.onload = function () {
         musicObj = JSON.parse(xhr.responseText)
