@@ -1,4 +1,5 @@
 ### musicPlayer
+博客地址：[音乐播放器](https://www.clloz.com/programming/front-end/2019/05/06/musicplayer/ "音乐播放器")
 
 ### 预览地址
 [音乐播放器](https://www.clloz.com/study/musicPlayer/index.html "音乐播放器")
