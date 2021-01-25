@@ -1,10 +1,49 @@
 var $ = function (selector) {
     return document.querySelector(selector);
-}
+};
 
 var $$ = function (selector) {
     return document.querySelectorAll(selector);
-}
+};
+
+var musicList = [
+    {
+        name: 'Tsunami',
+        artist: 'Southern All Stars',
+        image: 'https://img.clloz.com/project/music-player/img/tsunami.jpg',
+        src: 'https://img.clloz.com/project/music-player/music/tsunami.mp3',
+    },
+    {
+        name: 'Swimming',
+        artist: 'Everything Little Thing',
+        image: 'https://img.clloz.com/project/music-player/img/swim.jpg',
+        src: 'https://img.clloz.com/project/music-player/music/swim.mp3',
+    },
+    {
+        name: 'My Friend',
+        artist: 'Zard',
+        image: 'https://img.clloz.com/project/music-player/img/zard.png',
+        src: 'https://img.clloz.com/project/music-player/music/zard.mp3',
+    },
+    {
+        name: 'Re:make',
+        artist: 'One Ok Rock',
+        image: 'https://img.clloz.com/project/music-player/img/remake.jpg',
+        src: 'https://img.clloz.com/project/music-player/music/remake.mp3',
+    },
+    {
+        name: 'Hitomi Wo Tojite',
+        artist: 'Ayaka',
+        image: 'https://img.clloz.com/project/music-player/img/hitomi.jpg',
+        src: 'https://img.clloz.com/project/music-player/music/hitomi.mp3',
+    },
+    {
+        name: 'One More Time',
+        artist: 'Yamasaki',
+        image: 'https://img.clloz.com/project/music-player/img/onemoretime.jpg',
+        src: 'https://img.clloz.com/project/music-player/music/onemoretime.mp3',
+    },
+];
 
 //全局变量和元素获取
 var musicObj = null;
@@ -17,12 +56,12 @@ var nextBtn = $('.btn-next');
 var listBtn = $('.btn-list');
 var progress = $('.progress');
 var pCur = $('.current');
-var volBtn = $('.vol')
-var volSlid = $('.volume')
+var volBtn = $('.vol');
+var volSlid = $('.volume');
 var vol = $('.vol-control');
-var volCur = $('.vol-current')
+var volCur = $('.vol-current');
 var cursor = $('.cursor');
-var listWrap = $('.list-wrap')
+var listWrap = $('.list-wrap');
 var listEl = $('.song-list');
 var disEl = $('.disabled');
 var isContinue = false;
@@ -50,7 +89,7 @@ function setList(obj) {
         li.setAttribute('data-img', obj[i].image);
         li.setAttribute('data-src', obj[i].src);
         li.setAttribute('data-num', i);
-        li.className = 'song'
+        li.className = 'song';
 
         var hear = document.createElement('i');
         hear.className = 'fa fa-headphones';
@@ -60,16 +99,17 @@ function setList(obj) {
     }
 }
 
-
 //请求歌曲列表并初始化播放器
 function getMusicList(callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://www.clloz.com/study/musicPlayer/music.json', true);
-    xhr.send();
-    xhr.onload = function () {
-        musicObj = JSON.parse(xhr.responseText)
-        callback(musicObj)
-    }
+    // var xhr = new XMLHttpRequest();
+    // xhr.open('GET', './music.json', true);
+    // xhr.send();
+    // xhr.onload = function () {
+    //     musicObj = JSON.parse(xhr.responseText);
+    //     callback(musicObj);
+    // };
+    musicObj = musicList;
+    callback(musicList);
 }
 getMusicList(resetPlayer);
 
@@ -78,74 +118,81 @@ playBtn.addEventListener('click', function () {
     dontPlayYet = false;
     if (this.classList.contains('pause')) {
         audio.play();
-        this.classList.remove('pause')
+        this.classList.remove('pause');
         this.classList.add('play');
         allLi[playNum].classList.add('play');
     } else {
         audio.pause();
-	isContinue = false;
-        this.classList.remove('play')
+        isContinue = false;
+        this.classList.remove('play');
         this.classList.add('pause');
     }
-})
+});
 
 //点击上一首
 lastBtn.addEventListener('click', function () {
     allLi[playNum].classList.remove('play');
-    !!playNum ? playNum -= 1 : playNum = musicObj.length - 1;
+    !!playNum ? (playNum -= 1) : (playNum = musicObj.length - 1);
     allLi[playNum].classList.add('play');
     play(false);
-})
+});
 
 //点击下一首
 nextBtn.addEventListener('click', function () {
     allLi[playNum].classList.remove('play');
-    playNum === (musicObj.length - 1) ? playNum = 0 : playNum += 1;
+    playNum === musicObj.length - 1 ? (playNum = 0) : (playNum += 1);
     allLi[playNum].classList.add('play');
     play(false);
-})
+});
 
 //点击歌曲列表按钮
 listBtn.addEventListener('click', function () {
-    listWrap.classList.contains('hide') ? listWrap.classList.remove('hide') : listWrap.classList.add('hide');
-})
+    listWrap.classList.contains('hide')
+        ? listWrap.classList.remove('hide')
+        : listWrap.classList.add('hide');
+});
 
 //点击歌曲
 listEl.addEventListener('click', function (e) {
-    if (e.target.tagName.toLowerCase() === 'li' && parseInt(e.target.getAttribute('data-num')) !== playNum) {
+    if (
+        e.target.tagName.toLowerCase() === 'li' &&
+        parseInt(e.target.getAttribute('data-num')) !== playNum
+    ) {
         allLi[playNum].classList.remove('play');
         playNum = parseInt(e.target.getAttribute('data-num'));
         allLi[playNum].classList.add('play');
         play(false);
     } else if (playNum === 0 && dontPlayYet === true) {
-	allLi[playNum].classList.add('play');
+        allLi[playNum].classList.add('play');
         play(false);
     }
-})
+});
 
 //点击进度条
 progress.addEventListener('click', function (e) {
-    audio.currentTime = e.offsetX / 200 * duration;
+    audio.currentTime = (e.offsetX / 200) * duration;
     if (playBtn.classList.contains('pause')) {
-        playBtn.classList.remove('pause')
+        playBtn.classList.remove('pause');
         playBtn.classList.add('play');
     }
     audio.play();
-})
+});
 
 pCur.addEventListener('click', function (e) {
-    audio.currentTime = e.offsetX / 200 * duration;
+    audio.currentTime = (e.offsetX / 200) * duration;
     if (playBtn.classList.contains('pause')) {
-        playBtn.classList.remove('pause')
+        playBtn.classList.remove('pause');
         playBtn.classList.add('play');
     }
     audio.play();
-})
+});
 
 //点击音量按钮
 volBtn.addEventListener('click', function () {
-    volSlid.classList.contains('show') ? volSlid.classList.remove('show') : volSlid.classList.add('show');
-})
+    volSlid.classList.contains('show')
+        ? volSlid.classList.remove('show')
+        : volSlid.classList.add('show');
+});
 
 //拖动音量
 // cursor.addEventListener('mousedown', function (e) {
@@ -169,15 +216,15 @@ volBtn.addEventListener('click', function () {
 //点击切换音量
 vol.addEventListener('click', function (e) {
     audio.volume = parseFloat((35 - e.offsetY) / 35);
-    volCur.style.height = (35 - e.offsetY) + `px`;
-    volCur.style.top = (e.offsetY - 35) + `px`;
-})
+    volCur.style.height = 35 - e.offsetY + `px`;
+    volCur.style.top = e.offsetY - 35 + `px`;
+});
 volCur.addEventListener('click', function (e) {
     var h = parseInt(window.getComputedStyle(volCur).getPropertyValue('height').substr(0, 2));
-    volCur.style.height = (h - e.offsetY) + `px`;
-    volCur.style.top = (e.offsetY - h) + `px`;
+    volCur.style.height = h - e.offsetY + `px`;
+    volCur.style.top = e.offsetY - h + `px`;
     audio.volume = parseFloat((h - e.offsetY) / 35);
-})
+});
 
 //点击上一首下一首或歌曲列表
 function play(isReset) {
@@ -186,10 +233,10 @@ function play(isReset) {
     avatar.src = musicObj[playNum].image;
 
     if (!isReset) {
-	dontPlayYet = false;
+        dontPlayYet = false;
         pCur.style.width = 0;
         if (playBtn.classList.contains('pause')) {
-            playBtn.classList.remove('pause')
+            playBtn.classList.remove('pause');
             playBtn.classList.add('play');
         }
         audio.play();
@@ -203,9 +250,9 @@ audio.oncanplay = function () {
     var minute = parseInt(audio.duration / 60);
     var second = parseInt(audio.duration % 60);
     if (audio.currentTime === 0) {
-	progress.setAttribute('data-time', `00:00/` + minute + `:` + second);
+        progress.setAttribute('data-time', `00:00/` + minute + `:` + second);
     }
-}
+};
 
 audio.ontimeupdate = function () {
     var minute_d = parseInt(audio.duration / 60);
@@ -216,33 +263,33 @@ audio.ontimeupdate = function () {
     second = second < 10 ? `0` + second : second;
     if (audio.currentTime >= 1) {
         progress.setAttribute('data-time', minute + `:` + second + `/` + minute_d + `:` + second_d);
-        pCur.style.width = parseInt(audio.currentTime / audio.duration * 200) + `px`;
+        pCur.style.width = parseInt((audio.currentTime / audio.duration) * 200) + `px`;
     }
-}
+};
 
 audio.onended = function () {
     var event = new Event('click');
     nextBtn.dispatchEvent(event);
-}
+};
 
 //online offline
 window.onoffline = function () {
-    console.log("offline")
+    console.log('offline');
     disEl.classList.add('show');
     var event = new Event('click');
     listBtn.dispatchEvent(event);
     if (!audio.paused) {
-	playBtn.dispatchEvent(event);
-	isContinue = true;
+        playBtn.dispatchEvent(event);
+        isContinue = true;
     }
-}
+};
 
 window.ononline = function () {
-    console.log("online");
+    console.log('online');
     disEl.classList.remove('show');
     var event = new Event('click');
     listBtn.dispatchEvent(event);
     if (isContinue) {
-	playBtn.dispatchEvent(event);
+        playBtn.dispatchEvent(event);
     }
-}
+};
